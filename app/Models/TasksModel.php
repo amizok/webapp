@@ -5,6 +5,7 @@ use CodeIgniter\Model;
 class TasksModel extends Model
 {
     protected $table = 'tb_tasks';
+    protected $allowedFields = ['title', 'description', 'end_date', 'completed', 'weight'];
 
     public function getTaskAll()
     {

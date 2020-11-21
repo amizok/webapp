@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1>タスク一覧</h1>
+    <a href="/task/new">新規登録</a>
     <table border="1">
         <tr>
             <th>タイトル</th>
@@ -32,9 +33,7 @@
         ?>
     </table>
 
-    <form method="post" action="/task">
-        <input type="submit" value="create test">
-    </form>
+    <hr>
 
     <form method="post" action="/task/1">
         <!-- method postでこの1行を追加！ -->

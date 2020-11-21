@@ -18,4 +18,8 @@ class TasksModel extends Model
             ->first();
     }
 
+    public function setTask($data)
+    {
+        return $this->save($data);
+    }
 }

@@ -1,11 +1,19 @@
 <div class="contents-navi">
-    <a href="/task">タスク一覧</a>新規登録
+  <a href="/task">タスク一覧</a>新規登録
 </div>
-<h3>新規登録フォーム</h3>
-<form method="post" action="/task">
-    タイトル:<input type="textarea" name="title"><br />
-    詳細:<input type="textarea" name="description"><br />
-    期限:<input type="date" name="end_date"><br />
-    <input type="submit" value="登録">
+
+<form class="mui-form" method="post" action="/task">
+  <legend>新規タスク</legend>
+  <div class="mui-textfield">
+    <input type="text" name="title" placeholder="title">
+  </div>
+  <div class="mui-textfield">
+    <textarea placeholder="description" name="description"></textarea>
+  </div>
+  <div class="mui-textfield">
+    end date
+    <input type="datetime-local" name="end_date"><br />
+  </div>
+  <button type="submit" class="mui-btn mui-btn--small mui-btn--primary">create new task</button>
 </form>
 

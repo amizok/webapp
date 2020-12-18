@@ -8,11 +8,11 @@ class Task extends BaseController
     {
         $tasksModel = new TasksModel();
         $task_list = $tasksModel->getTaskAll();
-        $view_data = [
+        $data = [
             'task_list' => $task_list,
         ];
 
-        return view('task/list', $view_data);
+        return $this->view('task/list', $data);
     }
 
     // get(:id)
@@ -23,36 +23,33 @@ class Task extends BaseController
         $data = [
             'task' => $task,
         ];
-        return view('task/show', $data);
+        return $this->view('task/show', $data);
     }
 
-    // FIXME ここから途中
     // post
     public function create()
     {
-        // FIXME ここ失敗するよ。
-        // エラー修正できるひと求む
-        // FIXME codeigniterが提供しているクラスを利用する事でよりセキュアな実装ができます。
-        // 時間があれば試してください。
-        $title       = $_POST['title'];
-        $description = $_POST['description'];
-        $end_date    = $_POST['end_date'];
-        if (empty($title) || empty($description) || empty($end_date)) {
+        // CodeIgniter\HTTP\IncomingRequest
+        $title       = $this->request->getPostGet('title');
+        $description = $this->request->getPostGet('description');
+        $end_date    = $this->request->getPostGet('end_date');
+
+        if (empty($title) || empty($description)) {
             error_log('[LOG]:'.__METHOD__.':'.__LINE__.':' . var_export('入力項目が不足', true));
             return redirect()->to('/task');
         }
 
         $data = [
-            'title' => $title,
+            'title'       => $title,
             'description' => $description,
-            'end_date' => $end_date,
-            'completed' => 0,
-            'weight' => 1,
+            'end_date'    => $end_date,
+            'completed'   => 0,
+            'weight'      => 1,
         ];
 
         // DBに登録
         $tasksModel = new TasksModel();
-        $tasksModel->setTask($data);
+        $tasksModel->saveTask($data);
 
         return redirect()->to('/task');
     }
@@ -60,19 +57,44 @@ class Task extends BaseController
     // put(:id)
     public function update($id)
     {
-        error_log('[LOG]:'.__METHOD__.':'.__LINE__);
+        // CodeIgniter\HTTP\IncomingRequest
+        $title       = $this->request->getPostGet('title');
+        $description = $this->request->getPostGet('description');
+        $end_date    = $this->request->getPostGet('end_date');
+
+        // FIXME そろそろバリデーションクラス使う
+        // Model側で出来るっぽい
+        if (empty($title) || empty($description)) {
+            error_log('[LOG]:'.__METHOD__.':'.__LINE__.':' . var_export('入力項目が不足', true));
+            return redirect()->to('/task');
+        }
+
+        $data = [
+            'id'          => $id,
+            'title'       => $title,
+            'description' => $description,
+            'end_date'    => $end_date,
+        ];
+
+        // DBに登録
+        $tasksModel = new TasksModel();
+        $tasksModel->saveTask($data);
+
         return redirect()->to('/task');
     }
 
     // delete(:id)
     public function delete($id)
     {
-        error_log('[LOG]:'.__METHOD__.':'.__LINE__);
+        // DBに登録
+        $tasksModel = new TasksModel();
+        $tasksModel->deleteTask($id);
+
         return redirect()->to('/task');
     }
 
     public function new()
     {
-        return view('task/new');
+        return $this->view('task/new');
     }
 }

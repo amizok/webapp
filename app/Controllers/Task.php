@@ -61,20 +61,19 @@ class Task extends BaseController
         $title       = $this->request->getPostGet('title');
         $description = $this->request->getPostGet('description');
         $end_date    = $this->request->getPostGet('end_date');
-
-        // FIXME そろそろバリデーションクラス使う
-        // Model側で出来るっぽい
-        if (empty($title) || empty($description)) {
-            error_log('[LOG]:'.__METHOD__.':'.__LINE__.':' . var_export('入力項目が不足', true));
-            return redirect()->to('/task');
-        }
-
+        $completed   = $this->request->getPostGet('completed');
         $data = [
             'id'          => $id,
             'title'       => $title,
             'description' => $description,
             'end_date'    => $end_date,
         ];
+
+        if (isset($completed)) {
+            $completed = ($completed == TasksModel::COMPLETED_DONE) ?
+                TasksModel::COMPLETED_WIP : TasksModel::COMPLETED_DONE;
+            $data['completed'] = $completed;
+        }
 
         // DBに登録
         $tasksModel = new TasksModel();

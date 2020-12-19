@@ -7,6 +7,9 @@ class TasksModel extends Model
     protected $table = 'tb_tasks';
     protected $allowedFields = ['title', 'description', 'end_date', 'completed', 'weight'];
 
+    const COMPLETED_DONE = 1;
+    const COMPLETED_WIP  = 0;
+
     /**
      * 全件取得
      */
@@ -35,8 +38,6 @@ class TasksModel extends Model
     {
         return $this->save($data);
     }
-
-    // FIXME 完了/ 未完了フラグ更新向けの処理を作る. できればトグルで.
 
     /**
      * 1件削除

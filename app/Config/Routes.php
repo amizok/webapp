@@ -33,15 +33,13 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 
 $routes->resource('task');
-$routes->get('/task/new',            'Task::new');
-$routes->post('/task',               'Task::create');
-$routes->get('/task',                'Task::index');
-$routes->get('/task(:segment)',      'Task::show/$1');
-$routes->get('/task(:segment)/edit', 'Task::edit/$1');
-$routes->put('/task(:segment)',      'Task::update/$1');
-$routes->patch('/task(:segment)',    'Task::update/$1');
-$routes->delete('/task(:segment)',   'Task::delete/$1');
-
+$routes->get('/task/new',          'Task::new');
+$routes->post('/task',             'Task::create');
+$routes->get('/task',              'Task::index');
+$routes->get('/task(:segment)',    'Task::show/$1');
+$routes->put('/task(:segment)',    'Task::update/$1');
+$routes->patch('/task(:segment)',  'Task::update/$1');
+$routes->delete('/task(:segment)', 'Task::delete/$1');
 
 
 /**
